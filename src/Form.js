@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
 import * as yup from "yup"; 
 import axios from "axios";
 
@@ -29,7 +28,7 @@ export default function Form() {
     password: yup
       .string()
       .required("Password is required.")
-      .min(6, "Passwords must be at least 6 characters long.")
+      .min(8)
   });
  
   const validateChange = (e) => {
@@ -68,7 +67,7 @@ export default function Form() {
       })
       .catch((err) => {
         setServerError("Error Message");
-      });
+      })
   };
 
   const inputChange = (e) => {
@@ -76,7 +75,7 @@ export default function Form() {
     const newFormData = {
       ...formState,
       [e.target.name]:
-        e.target.type === "checkbox" ? e.target.checked : e.target.value
+        e.target.type === "name" ? e.target.name : e.target.value
     }; 
     validateChange(e); 
     setFormState(newFormData); 
@@ -122,13 +121,10 @@ export default function Form() {
         />
       </label>
       <pre>{JSON.stringify(post, null, 2)}</pre>
-      <Switch>
-        <Route path="/">           
+               
             <button disabled={isButtonDisabled} type="submit">
               Submit
-            </button>
-        </Route>
-      </Switch>
+            </button>    
     </form>
   );
 }
