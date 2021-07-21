@@ -120,11 +120,27 @@ export default function Form() {
           onChange={inputChange}
         />
       </label>
+      <label htmlFor="password">
+        Password
+        <input
+          id="password-repeat"
+          type="text"
+          name="password-repeat"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+          value={formState.password}
+          onChange={inputChange}
+        />
+      </label>
+
       <pre>{JSON.stringify(post, null, 2)}</pre>
-               
+      <p>By creating an account you agree to our <a href="/">Terms & Privacy</a>.</p>         
             <button disabled={isButtonDisabled} type="submit">
               Submit
-            </button>    
+            </button>  
+      <div className="container signin">
+        <p>Already have an account? <a href="/">Sign in</a>.</p>
+      </div>  
     </form>
   );
 }
