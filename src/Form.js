@@ -83,7 +83,7 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={formSubmit}>
+    <form id='form' onSubmit={formSubmit}>
       {serverError ? <p className="error">{serverError}</p> : null}
       <label htmlFor="name">
         Name
@@ -115,6 +115,8 @@ export default function Form() {
           id="password"
           type="text"
           name="password"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
           value={formState.password}
           onChange={inputChange}
         />
