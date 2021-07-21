@@ -1,5 +1,4 @@
 import React from "react";
-
 import Form from "./components/Registration-Form";
 import { Link } from "react-router-dom";
 
