@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup"; 
 import axios from "axios";
 
-export default function Form() {
+export default function LoginForm() {
   
   const [formState, setFormState] = useState({
-    name: "",
     email: "",
     password: ""
   });
@@ -17,13 +16,11 @@ export default function Form() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   
   const [errors, setErrors] = useState({
-    name: "",
     email: "",
     password: ""
   });
   
   const formSchema = yup.object().shape({
-    name: yup.string().required("Name is a required field"),
     email: yup.string().email("must be a valid email address").required(),
     password: yup
       .string()
@@ -59,7 +56,6 @@ export default function Form() {
       .then((response) => {
         setPost(response.data);       
         setFormState({
-          name: "",
           email: "",
           password: ""
         });       
@@ -82,19 +78,8 @@ export default function Form() {
   };
 
   return (
-    <form id='form' onSubmit={formSubmit}>
+    <form id='LoginForm' onSubmit={formSubmit}>
       {serverError ? <p className="error">{serverError}</p> : null}
-      <label htmlFor="name">
-        Name
-        <input
-          id="name"
-          type="text"
-          name="name"
-          onChange={inputChange}
-          value={formState.name}
-        />
-        {errors.name.length > 0 ? <p className="error">{errors.name}</p> : null}
-      </label>
       <label htmlFor="email">
         Email
         <input
@@ -120,26 +105,13 @@ export default function Form() {
           onChange={inputChange}
         />
       </label>
-      <label htmlFor="password">
-        Password
-        <input
-          id="password-repeat"
-          type="text"
-          name="password-repeat"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-          value={formState.password}
-          onChange={inputChange}
-        />
-      </label>
 
       <pre>{JSON.stringify(post, null, 2)}</pre>
-      <p>By creating an account you agree to our <a href="/">Terms & Privacy</a>.</p>         
+      <p>Already have an account? <a href="/">Login</a>.</p>         
             <button disabled={isButtonDisabled} type="submit">
               Submit
             </button>  
-      <div className="container signin">
-        <p>Already have an account? <a href="/">Sign in</a>.</p>
+      <div className="container signin">  
       </div>  
     </form>
   );
