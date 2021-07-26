@@ -2,9 +2,10 @@ import React from "react";
 import RecipeForm from "./RecipeForm";
 import {Switch, Route, Link} from "react-router-dom"
 import './App.css';
+import {connect} from 'react-redux';
 
 
-export default function Home() {
+function Home() {
     return (
       <div className='home-page'>
         <Switch>
@@ -26,5 +27,7 @@ export default function Home() {
       </div>
     );
   }
+
+export default connect(null, {})(Home);
 
   

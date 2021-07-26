@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup"; 
 import axios from "axios";
+import {connect} from 'react-redux';
 
-export default function LoginForm() {
+function LoginForm() {
   
   const [formState, setFormState] = useState({
     email: "",
@@ -116,3 +117,18 @@ export default function LoginForm() {
     </form>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    form: {
+      email: state.loginAndRegister.email,
+      password: state.loginAndRegister.password
+    },
+    errors: {
+      email: state.errorsLoginAndRegister.email,
+      password: state.errorsLoginAndRegister.password
+    }
+  }
+}
+
+export default connect(mapStateToProps, {})(LoginForm);

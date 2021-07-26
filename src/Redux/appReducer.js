@@ -1,7 +1,28 @@
 import { UPDATE_LOGIN_FORM, UPDATE_RECIPE_FORM, REGISTER_USER, LOGIN_USER } from "./actionCreators";
 
 const initialState = {
-    test: 'test'
+    test: 'test',
+    loginAndRegister: {
+        email: "",
+        password: ""
+    },
+    errorsLoginAndRegister: {
+        email: "",
+        password: ""
+    },
+    recipeForm: {
+        id: "",
+        title: "",
+        source: "", 
+        ingredients: "", 
+        instructions: "",
+        category: ""
+    },
+    errorsRecipeForm: {
+        title: "",
+        source: "",
+        category: ""
+    }
 }
 
 const appReducer = (state = initialState, action) => {

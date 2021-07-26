@@ -2,8 +2,9 @@ import React from "react";
 import RegistrationForm from "./RegistrationForm";
 import { Route, Switch } from 'react-router-dom'
 import './App.css';
+import {connect} from 'react-redux';
 
-export default function App() {
+function App() {
   return (
     <div className="App">
     <h1 className='page-header'>Secret Family Recipes</h1>
@@ -21,3 +22,23 @@ export default function App() {
     </div>
   );
 }
+
+export default connect(null, {})(App);
+
+// NEEDS ROUTING TO LOGIN FORM
+// NEEDS ROUTING TO RECIPE FORM
+// NEEDS ROUTING TO HOME
+// NEED PAGE THAT DISPLAYS ALL RECIPES
+// BOTH HOME AND APP HAVE REACT-ROUTER-DOM SWITCH STATEMENTS- UNNECESSARY
+// (ROUTER IS ON INDEX)
+
+// LETS GO OVER USER FLOW DURING MEETING
+// THAT SHOULD GIVE US A CLEAR IDEA OF WHAT STILL NEEDS TO BE FINISHED
+// CAN LOGIN AND REGISTRATION BE THE SAME COMPONENT?
+// IF NO PLEASE DO SOMETHING TO DIFFERENTIATE THE TWO
+
+// NOTES FOR JOHN
+// PRIVATE ROUTE => ALL RECIPES
+// ASK BARRY IF BUTTON STATE CAN STAY ON LOCAL COMPONENTS
+// I FORGET, DOES CONNECT MEAN YOU NEED TO PASS PROPS INTO THE COMPONENTS?
+// CAN I PUT THE YUP VALIDATION INTO THE REDUX STORE???

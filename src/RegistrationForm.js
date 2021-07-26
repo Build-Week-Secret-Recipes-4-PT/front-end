@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup"; 
 import axios from "axios";
+import {connect} from 'react-redux';
 
-export default function RegistrationForm() {
+function RegistrationForm() {
   
   const [formState, setFormState] = useState({
     email: "",
@@ -118,3 +119,5 @@ export default function RegistrationForm() {
     </form>
   );
 }
+
+export default connect(null, {})(RegistrationForm);
