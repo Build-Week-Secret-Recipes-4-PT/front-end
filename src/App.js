@@ -2,8 +2,9 @@ import React from "react";
 import RegistrationForm from "./RegistrationForm";
 import { Route, Switch } from 'react-router-dom'
 import './App.css';
+import {connect} from 'react-redux';
 
-export default function App() {
+function App() {
   return (
     <div className="App">
     <h1 className='page-header'>Secret Family Recipes</h1>
@@ -21,6 +22,8 @@ export default function App() {
     </div>
   );
 }
+
+export default connect(null, {})(App);
 
 // NEEDS ROUTING TO LOGIN FORM
 // NEEDS ROUTING TO RECIPE FORM

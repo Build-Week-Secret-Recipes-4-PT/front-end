@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import * as yup from "yup";
 import axios from "axios";
+import {connect} from 'react-redux';
 
 const initialFormValues = {
         title: "",
@@ -17,7 +18,7 @@ const initialFormErrors = {
         category: "",
 };
 
-export default function RecipeForm() {
+function RecipeForm() {
 
     const [recipeForm, setRecipeForm] = useState(initialFormValues);
         
@@ -130,3 +131,5 @@ return (
     </form>
 )
 }
+
+export default connect(null, {})(RecipeForm);
