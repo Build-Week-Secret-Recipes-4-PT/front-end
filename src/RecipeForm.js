@@ -132,4 +132,24 @@ return (
 )
 }
 
-export default connect(null, {})(RecipeForm);
+const mapStateToProps = state => {
+
+    return {
+        form : {
+            id: state.recipeForm.id,
+            title: state.recipeForm.title,
+            source: state.recipeForm.source, 
+            ingredients: state.recipeForm.ingredients, 
+            instructions: state.recipeForm.instructions,
+            category: state.recipeForm.instructions
+        },
+        errors: {
+            title: state.errorsRecipeForm.title,
+            source: state.errorsRecipeForm.source,
+            category: state.errorsRecipeForm.category,
+        }
+    }
+
+}
+
+export default connect(mapStateToProps, {})(RecipeForm);
