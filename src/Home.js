@@ -13,7 +13,7 @@ export default function Home() {
           <nav>
             <ul>
               <li>
-                <Link to="/">Login/Register</Link>
+                <Link to="/">Logout</Link>
               </li>
             </ul>
           </nav>
