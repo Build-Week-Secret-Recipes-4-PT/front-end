@@ -5,7 +5,10 @@ import './App.css';
 import {connect} from 'react-redux';
 import {RecipeCard} from './RecipeCard'
 
-
+// THIS NEEDS TO DISPLAY ALL RECIPES
+// A CARD-COMPONENT CALLED CALLED BY LOOPING OVER THE ARRAY OF RECIPES SHOULD WORK
+// CARD COMPONENTS SHOULD BE ABLE TO CALL A FORM TO EDIT
+// ROUTER SWITCH NEEDS TO BE REMOVED COMPLETELY
 function Home() {
 
   const Recipes = (props) => {
