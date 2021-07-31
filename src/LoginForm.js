@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup"; 
 import axios from "axios";
 import {connect} from 'react-redux';
+import { clearErrorsLoginAndRegister, clearLoginAndRegisterForm, loginUser, setErrorsLoginAndRegister, testyup, updateLoginAndRegisterForm } from "./Redux/actionCreators";
 
-function LoginForm() {
+function LoginForm(props) {
+
+  // ALL THE DISPATCH'S SHOULD BE THE SAME AS THE LOGIN FORM- I THINK
   
   const [formState, setFormState] = useState({
     email: "",
@@ -34,10 +37,12 @@ function LoginForm() {
       .reach(formSchema, e.target.name) 
       .validate(e.target.value) 
       .then((valid) => {
+        // DISPATCH CLEARERRORS
         setErrors({ ...errors, [e.target.name]: "" });
       })
       .catch((err) => {
         console.log("error!", err);
+        // DISPATCH SETERRORS
         setErrors({ ...errors, [e.target.name]: err.errors[0] });
       });
   };
@@ -47,8 +52,10 @@ function LoginForm() {
       console.log("valid?", valid);
       setIsButtonDisabled(!valid);
     });
+    // WILL NEED TO LOOK INTO STATE
   }, [formState, formSchema]);
   
+  // DISPATCH SUBMIT
   const formSubmit = (e) => {
     e.preventDefault();
    
@@ -67,6 +74,7 @@ function LoginForm() {
       })
   };
 
+  // DISPATCH INPUT CHANGE
   const inputChange = (e) => {
     e.persist(); 
     const newFormData = {
@@ -79,7 +87,9 @@ function LoginForm() {
   };
 
   return (
+    // DISPATCH SUBMIT
     <form id='LoginForm' onSubmit={formSubmit}>
+      {/* SERVER ERROR IS IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
       <label htmlFor="email">
         Email
@@ -87,9 +97,12 @@ function LoginForm() {
           id="password"
           type="text"
           name="email"
+          // ONCHANGE DISPATCH
           onChange={inputChange}
+          // VALUE IS IN STORE
           value={formState.email}
         />
+        {/* ERRORS IN STORE */}
         {errors.email.length > 0 ? (
           <p className="error">{errors.email}</p>
         ) : null}
@@ -102,7 +115,9 @@ function LoginForm() {
           name="password"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+          // VALUE IN STORE
           value={formState.password}
+          // DISPATCH ON CHANGE
           onChange={inputChange}
         />
       </label>
@@ -120,15 +135,22 @@ function LoginForm() {
 
 const mapStateToProps = state => {
   return {
-    form: {
-      email: state.loginAndRegister.email,
-      password: state.loginAndRegister.password
-    },
-    errors: {
-      email: state.errorsLoginAndRegister.email,
-      password: state.errorsLoginAndRegister.password
-    }
+    form: state.loginAndRegister,
+    errors: state.errorsLoginAndRegister,
+    serverError: state.serverError,
+    test: test
   }
 }
 
-export default connect(mapStateToProps, {})(LoginForm);
+const mapDispatchToProps = state => {
+  return {
+    updateForm: updateLoginAndRegisterForm,
+    clearForm: clearLoginAndRegisterForm,
+    setErrors: setErrorsLoginAndRegister,
+    clearErrors: clearErrorsLoginAndRegister,
+    submit: loginUser,
+    test: testyup
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

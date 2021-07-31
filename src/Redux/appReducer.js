@@ -1,4 +1,4 @@
-import { UPDATE_LOGIN_FORM, UPDATE_RECIPE_FORM, REGISTER_USER, LOGIN_USER } from "./actionCreators";
+import { UPDATE_LOGIN_AND_REGISTER_FORM, CLEAR_LOGIN_AND_REGISTER_FORM, CLEAR_ERRORS_LOGIN_AND_REGISTER, UPDATE_RECIPE_FORM, REGISTER_USER, LOGIN_USER, test } from "./actionCreators";
 
 const initialState = {
     test: 'test',
@@ -22,15 +22,24 @@ const initialState = {
         title: "",
         source: "",
         category: ""
-    }
+    },
+    allRecipes: []
+    serverError = ''
 }
 
 const appReducer = (state = initialState, action) => {
 
     switch(action.type) {
 
-        case UPDATE_LOGIN_FORM:
+        case UPDATE_LOGIN_AND_REGISTER_FORM:
             return state;
+
+        case CLEAR_LOGIN_AND_REGISTER_FORM:
+            return state;
+        
+        case CLEAR_ERRORS_LOGIN_AND_REGISTER:
+            // return {...state, state.loginAndRegister[action.payload.target.name]: action.payload.target.value};
+            return {...state};
 
         case UPDATE_RECIPE_FORM:
             return state;
@@ -39,6 +48,10 @@ const appReducer = (state = initialState, action) => {
             return state;
 
         case LOGIN_USER:
+            return state;
+        
+        case test:
+            console.log(state);
             return state;
 
         default:

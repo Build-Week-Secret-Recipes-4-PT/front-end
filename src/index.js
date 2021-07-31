@@ -4,10 +4,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import appReducer from './Redux/appReducer';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import logger from 'redux-logger';
 
-const store = createStore(appReducer)
+// WILL NEED TO CONNECT THUNK WHEN IMPLEMENTING... THUNKS
+const store = createStore(appReducer, applyMiddleware(logger))
 
 ReactDOM.render(
   <React.StrictMode>
