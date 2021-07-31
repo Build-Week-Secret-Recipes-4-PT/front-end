@@ -17,7 +17,10 @@ function RegistrationForm(props) {
     formSchema.isValid(props.form).then((valid) => {
       setIsButtonDisabled(!valid);
     });
-  }, [props.form, formSchema]);
+    // REMOVED FORMSCHEMA FROM BELOW
+    // BECAUSE IT BEGAN TO THROW AN ERROR
+    // NOT SURE IF IT NEEDED TO BE THERE IN THE FIRST PLACE
+  }, [props.form]);
 
   // YUP SCHEMA
   const formSchema = yup.object().shape({
