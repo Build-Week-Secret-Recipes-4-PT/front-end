@@ -34,14 +34,23 @@ const appReducer = (state = initialState, action) => {
     switch(action.type) {
 
         case UPDATE_LOGIN_AND_REGISTER_FORM:
-            return state;
+            return {...state,
+            loginAndRegister: {
+                ...state.loginAndRegister,
+                [action.payload.target.name]: action.payload.target.value
+            }
+        };
 
         case CLEAR_LOGIN_AND_REGISTER_FORM:
             return state;
         
         case CLEAR_ERRORS_LOGIN_AND_REGISTER:
-            // return {...state, state.loginAndRegister[action.payload.target.name]: action.payload.target.value};
-            return {...state};
+            // PAYLOAD[0] = EVENT, PAYLOAD[1] = ERROR
+            return {...state,
+            errorsLoginAndRegister: {
+                ...state.errorsLoginAndRegister,
+                [action.payload[0].target.name]: action.payload[2]
+            }}
 
         case UPDATE_RECIPE_FORM:
             return state;

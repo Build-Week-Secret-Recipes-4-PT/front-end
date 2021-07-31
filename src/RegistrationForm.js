@@ -5,11 +5,6 @@ import {connect} from 'react-redux';
 import { updateLoginAndRegisterForm, clearLoginAndRegisterForm, setErrorsLoginAndRegister, clearErrorsLoginAndRegister, registerUser, testyup } from './Redux/actionCreators'
 
 function RegistrationForm(props) {
-
-  const [formState, setFormState] = useState({
-    email: "",
-    password: ""
-  });
   
   const [post, setPost] = useState([]);
   
@@ -18,11 +13,13 @@ function RegistrationForm(props) {
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   
-  const [errors, setErrors] = useState({
-    email: "",
-    password: ""
-  });
-  
+  useEffect(() => {
+    formSchema.isValid(props.form).then((valid) => {
+      setIsButtonDisabled(!valid);
+    });
+  }, [props.form, formSchema]);
+
+  // YUP SCHEMA
   const formSchema = yup.object().shape({
     email: yup.string().email("must be a valid email address").required(),
     password: yup
@@ -31,91 +28,66 @@ function RegistrationForm(props) {
       .min(8)
   });
  
+  // YUP VALIDATION
   const validateChange = (e) => {
     yup
       .reach(formSchema, e.target.name) 
       .validate(e.target.value) 
       .then((valid) => {
-        // DISPATCH CLEAR ERRORS
-        setErrors({ ...errors, [e.target.name]: "" });
+        props.clearErrors()
       })
       .catch((err) => {
         console.log("error!", err);
-        // DISPATCH SET ERRORS
-        setErrors({ ...errors, [e.target.name]: err.errors[0] });
+        props.setErrors(e, err)
       });
   };
   
-  useEffect(() => {
-    // FORM STATE IS IN STORE
-    formSchema.isValid(formState).then((valid) => {
-      // COMMENTING OUT WHILE I WORK ON SETTING UP REDUX
-      // console.log("valid?", valid);
-      setIsButtonDisabled(!valid);
-    });
-    // CHANGE TO PROPS.FORM
-  }, [formState, formSchema]);
-  
+  // DISPATCH
   const formSubmit = (e) => {
     e.preventDefault();
-   
     // WILL NEED TO BE PUT INTO DISPATCH EVENTUALLY, SAVE THUNKS FOR END
-    axios
+    // axios
     // FOR NOW CHANGE FORMSTATE TO PROPS.FORM
-      .post("https://reqres.in/api/users", formState)
-      .then((response) => {
-        setPost(response.data); 
+      // .post("https://reqres.in/api/users", formState)
+      // .then((response) => {
+      //   setPost(response.data); 
         // DISPATCH CLEAR FORM
-        setFormState({
-          email: "",
-          password: ""
-        });    
+        // setFormState({
+        //   email: "",
+        //   password: ""
+        // });    
       // FINE FOR NOW, WILL NEED TO BE SET INTO STORE 
-        setServerError(null);
-      })
-      .catch((err) => {
+        // setServerError(null);
+      // })
+      // .catch((err) => {
       // FINE FOR NOW, WILL NEED TO BE SET INTO STORE 
-        setServerError("Error Message");
-      })
+        // setServerError("Error Message");
+      // })
   };
-
-  // DISPATCH INPUT
-  const inputChange = (e) => {
-    // THIS COMMENT IS FOR UNIT 2
-    // EVENT.PERSIST SHOULDNT DO ANYTHING ACCORDING TO REACTJS.ORG DOCS
-    // CAN WE REMOVE THIS? WHAT WAS THE REASON FOR THE INCLUSION
-    e.persist(); 
-    const newFormData = {
-      ...formState,
-      [e.target.name]:
-        e.target.type === "name" ? e.target.name : e.target.value
-    }; 
-    validateChange(e);
-    setFormState(newFormData); 
-  };
-
 
   return (
     <>
     <form id='RegistrationForm' onSubmit={formSubmit}>
+
       {/* SERVER ERROR IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
+
       <label htmlFor="email">
         Email
         <input
-          id="password"
+          id="email"
           type="text"
           name="email"
-          // DISPATCH CHANGE
-          onChange={inputChange}
-          // CHANGE
-          value={formState.email}
+          onChange={e => props.updateForm(e)}
+          value={props.form.email}
         />
-        {/* ERRORS IN STORE */}
-        {errors.email.length > 0 ? (
-          <p className="error">{errors.email}</p>
+
+        {props.errors.email.length > 0 ? (
+          <p className="error">{props.errors.email}</p>
         ) : null}
+
       </label>
+
       <label htmlFor="password">
         Password
         <input
@@ -124,25 +96,26 @@ function RegistrationForm(props) {
           name="password"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-          // VALUE IN STORE
-          value={formState.password}
-          // DISPATCH CHANGE
-          onChange={inputChange}
+          value={props.form.password}
+          onChange={e => props.updateForm(e)}
         />
       </label>
 
       {/* IM NOT SURE THIS NEEDS TO BE A JSON STRING, OR WHAT EXACTLY THIS IS DOING */}
       <pre>{JSON.stringify(post, null, 2)}</pre>
-      <p>By creating an account you agree to our <a href="/">Terms & Privacy</a>.</p>         
-            <button disabled={isButtonDisabled} type="submit">
-              Submit
-            </button>  
+
+      <p>By creating an account you agree to our <a href="/">Terms & Privacy</a>.</p>
+
+      <button disabled={isButtonDisabled} type="submit">
+        Submit
+      </button>  
+
       <div className="container signin">
-        <p>Already have an account? <a href="/">Login</a>.</p>
-        
-      </div>  
+        <p>Already have an account? <a href="/">Login</a>.</p>  
+      </div>
+
     </form>
-       <button onClick={props.testyup} >click to test</button>
+       <button onClick={props.testyup} >click to test reducer </button>
     </>
   );
 }
@@ -155,14 +128,14 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateForm: updateLoginAndRegisterForm,
-    clearForm: clearLoginAndRegisterForm,
-    setErrors: setErrorsLoginAndRegister,
-    clearErrors: clearErrorsLoginAndRegister,
-    submit: registerUser,
-    testyup: testyup
+    updateForm: (e) => dispatch (updateLoginAndRegisterForm(e)),
+    clearForm: () => dispatch (clearLoginAndRegisterForm()),
+    setErrors: (e, err) => dispatch (setErrorsLoginAndRegister(e, err)),
+    clearErrors: () => dispatch (clearErrorsLoginAndRegister()),
+    submit: () => dispatch (registerUser()),
+    testyup: () => dispatch(testyup())
   }
 }
 
