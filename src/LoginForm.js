@@ -48,6 +48,7 @@ function LoginForm(props) {
   };
   
   useEffect(() => {
+    // FORM STATE IS IN STORE
     formSchema.isValid(formState).then((valid) => {
       console.log("valid?", valid);
       setIsButtonDisabled(!valid);

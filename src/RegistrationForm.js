@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup"; 
 import axios from "axios";
 import {connect} from 'react-redux';
+import { updateLoginAndRegisterForm, clearLoginAndRegisterForm, setErrorsLoginAndRegister, clearErrorsLoginAndRegister, registerUser, testyup } from './Redux/actionCreators'
 
 function RegistrationForm(props) {
 
@@ -12,7 +13,7 @@ function RegistrationForm(props) {
   
   const [post, setPost] = useState([]);
   
-  // WILL NEED PUT IN STORE
+  // IS IN STORE
   const [serverError, setServerError] = useState("");
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -46,7 +47,7 @@ function RegistrationForm(props) {
   };
   
   useEffect(() => {
-    // CHANGE TO PROPS.FORM
+    // FORM STATE IS IN STORE
     formSchema.isValid(formState).then((valid) => {
       // COMMENTING OUT WHILE I WORK ON SETTING UP REDUX
       // console.log("valid?", valid);
@@ -78,25 +79,26 @@ function RegistrationForm(props) {
       })
   };
 
+  // DISPATCH INPUT
   const inputChange = (e) => {
     // THIS COMMENT IS FOR UNIT 2
     // EVENT.PERSIST SHOULDNT DO ANYTHING ACCORDING TO REACTJS.ORG DOCS
     // CAN WE REMOVE THIS? WHAT WAS THE REASON FOR THE INCLUSION
     e.persist(); 
-    // PUT ALL OF THIS LOGIC IN THE REDUCER, SIMPLY PASS EVENT IN
     const newFormData = {
       ...formState,
       [e.target.name]:
         e.target.type === "name" ? e.target.name : e.target.value
     }; 
     validateChange(e);
-    // THIS WILL BE DONE IN REDUCER
     setFormState(newFormData); 
   };
 
+
   return (
+    <>
     <form id='RegistrationForm' onSubmit={formSubmit}>
-      {/* WILL NEED CHANGED WHEN SERVER ERROR IS ADDED TO REDUCER */}
+      {/* SERVER ERROR IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
       <label htmlFor="email">
         Email
@@ -104,11 +106,12 @@ function RegistrationForm(props) {
           id="password"
           type="text"
           name="email"
+          // DISPATCH CHANGE
           onChange={inputChange}
           // CHANGE
           value={formState.email}
         />
-        {/* CHANGE ALL OF THIS */}
+        {/* ERRORS IN STORE */}
         {errors.email.length > 0 ? (
           <p className="error">{errors.email}</p>
         ) : null}
@@ -121,8 +124,9 @@ function RegistrationForm(props) {
           name="password"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-          // CHANGE THIS
+          // VALUE IN STORE
           value={formState.password}
+          // DISPATCH CHANGE
           onChange={inputChange}
         />
       </label>
@@ -138,6 +142,8 @@ function RegistrationForm(props) {
         
       </div>  
     </form>
+       <button onClick={props.testyup} >click to test</button>
+    </>
   );
 }
 
@@ -149,4 +155,15 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(RegistrationForm);
+const mapDispatchToProps = state => {
+  return {
+    updateForm: updateLoginAndRegisterForm,
+    clearForm: clearLoginAndRegisterForm,
+    setErrors: setErrorsLoginAndRegister,
+    clearErrors: clearErrorsLoginAndRegister,
+    submit: registerUser,
+    testyup: testyup
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

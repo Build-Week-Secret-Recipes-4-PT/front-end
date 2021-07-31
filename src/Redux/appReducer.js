@@ -1,4 +1,4 @@
-import { UPDATE_LOGIN_AND_REGISTER_FORM, CLEAR_LOGIN_AND_REGISTER_FORM, CLEAR_ERRORS_LOGIN_AND_REGISTER, UPDATE_RECIPE_FORM, REGISTER_USER, LOGIN_USER, test } from "./actionCreators";
+import { UPDATE_LOGIN_AND_REGISTER_FORM, CLEAR_LOGIN_AND_REGISTER_FORM, CLEAR_ERRORS_LOGIN_AND_REGISTER, UPDATE_RECIPE_FORM, REGISTER_USER, LOGIN_USER, TEST } from "./actionCreators";
 
 const initialState = {
     test: 'test',
@@ -29,6 +29,8 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
 
+    console.log('inside reducer')
+
     switch(action.type) {
 
         case UPDATE_LOGIN_AND_REGISTER_FORM:
@@ -50,8 +52,8 @@ const appReducer = (state = initialState, action) => {
         case LOGIN_USER:
             return state;
         
-        case test:
-            console.log(state);
+        case TEST:
+            console.log('inside test case');
             return state;
 
         default:

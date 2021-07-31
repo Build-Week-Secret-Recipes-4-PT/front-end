@@ -6,7 +6,7 @@ export const CLEAR_ERRORS_LOGIN_AND_REGISTER = 'CLEAR_ERRORS_LOGIN_AND_REGISTER'
 // THESE WILL NEED TO BE THUNKS
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
-export const test = 'test'
+export const TEST = 'TEST'
 
 export const updateLoginAndRegisterForm = (formEvent) => {
     // FROM EVENT WILL BE PULL RELEVANT INFO IN THE REDUCER
@@ -43,5 +43,6 @@ export const loginUser = formData => dispatch => {
 }
 
 export const testyup = () => {
-    return {type: test}
+    console.log('inside action creator')
+    return {type: TEST}
 }

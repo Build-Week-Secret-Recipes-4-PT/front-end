@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import './App.css';
 import {connect} from 'react-redux';
 
-function App() {
+function App(props) {
   return (
     <div className="App">
     <h1 className='page-header'>Secret Family Recipes</h1>
@@ -37,11 +37,3 @@ export default connect(null, {})(App);
 // JUST LEAVE YUP IN COMPONENTS (UNLESS I HAVE EXTRA TIME)
 // I CAN MAYBE ADD THE YUP OBJECTS INTO STORE IF I AM ADVENTUROUS
 // REMEMBER IF CONNECT MEANS YOU MUST PASS PROPS
-
-// STEPS FOR CONVERTING COMPONENTS TO REDUX
-// MAP STATE TO PROPS
-// CONSOLE LOG TEST
-// COMMENT ALL CHANGES
-// GO THROUGH ONE AT A TIME AND CONVERT
-// MAP DISPATCH TO PROPS
-// TEST AND DEBUG
