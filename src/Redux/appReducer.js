@@ -23,8 +23,8 @@ const initialState = {
         source: "",
         category: ""
     },
-    allRecipes: []
-    serverError = ''
+    allRecipes: [],
+    serverError: ''
 }
 
 const appReducer = (state = initialState, action) => {
