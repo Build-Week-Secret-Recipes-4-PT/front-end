@@ -18,7 +18,7 @@ function Home() {
             }
         </div>
     )
-}
+  }
 
     return (
       <div className='home-page'>
