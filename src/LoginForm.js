@@ -92,6 +92,9 @@ function LoginForm(props) {
     <form id='LoginForm' onSubmit={formSubmit}>
       {/* SERVER ERROR IS IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
+      <header>
+        Login
+      </header>
       <label htmlFor="email">
         Email
         <input

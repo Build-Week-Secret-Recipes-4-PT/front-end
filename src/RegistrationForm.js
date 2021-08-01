@@ -84,7 +84,9 @@ function RegistrationForm(props) {
 
       {/* SERVER ERROR IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
-
+<header>
+  Register
+</header>
       <label htmlFor="email">
         Email
         <input
