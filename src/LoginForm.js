@@ -145,12 +145,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = state => {
   return {
-    updateForm: updateLoginAndRegisterForm,
-    clearForm: clearLoginAndRegisterForm,
-    setErrors: setErrorsLoginAndRegister,
-    clearErrors: clearErrorsLoginAndRegister,
-    submit: loginUser,
-    test: testyup
+    updateForm: () => dispatch(updateLoginAndRegisterForm()),
+    clearForm: () => dispatch(clearLoginAndRegisterForm()),
+    setErrors: () => dispatch(setErrorsLoginAndRegister()),
+    clearErrors: () => dispatch(clearErrorsLoginAndRegister()),
+    submit: () => dispatch(loginUser()),
+    test: () => dispatch(testyup())
   }
 }
 

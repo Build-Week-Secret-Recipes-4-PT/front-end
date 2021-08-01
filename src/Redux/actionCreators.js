@@ -1,4 +1,7 @@
-export const UPDATE_LOGIN_AND_REGISTER_FORM = 'UPDATE_LOGIN_AND_REGOISTER_FORM';
+import axios from 'axios';
+import axiosWithAuth from '../Components/axiosWithAuth';
+
+export const UPDATE_LOGIN_AND_REGISTER_FORM = 'UPDATE_LOGIN_AND_REGISTER_FORM';
 export const CLEAR_LOGIN_AND_REGISTER_FORM = 'CLEAR_LOGIN_AND_REGISTER_FORM';
 export const UPDATE_RECIPE_FORM = 'UPDATE_RECIPE_FORM';
 export const SET_ERRORS_LOGIN_AND_REGISTER = 'SET_ERRORS_LOGIN_AND_REGISTER';
@@ -18,8 +21,8 @@ export const clearLoginAndRegisterForm = () => {
     return {type: CLEAR_LOGIN_AND_REGISTER_FORM}
 }
 
-export const setErrorsLoginAndRegister = () => {
-    return {type: SET_ERRORS_LOGIN_AND_REGISTER}
+export const setErrorsLoginAndRegister = (event, error) => {
+    return {type: SET_ERRORS_LOGIN_AND_REGISTER, payload: [event, error]}
 }
 
 export const clearErrorsLoginAndRegister = () => {
@@ -35,7 +38,12 @@ export const updateRecipeForm = (formEvent) => {
 // TO IMPROVE READABILITY
 
 export const registerUser = formData => dispatch => {
-    return 'Foo (will be axios call later)'
+    console.log(formData)
+    return axiosWithAuth().post('https://recipesbuild.herokuapp.com/api/auth/register', formData)
+        .then(res => {
+            // window.localStorage.setItem('token')
+            console.log(res);
+        })
 }
 
 export const loginUser = formData => dispatch => {
