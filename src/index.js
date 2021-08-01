@@ -7,9 +7,10 @@ import appReducer from './Redux/appReducer';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 // WILL NEED TO CONNECT THUNK WHEN IMPLEMENTING... THUNKS
-const store = createStore(appReducer, applyMiddleware(logger))
+const store = createStore(appReducer, applyMiddleware(thunk, logger))
 
 ReactDOM.render(
   <React.StrictMode>

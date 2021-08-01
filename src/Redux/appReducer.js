@@ -46,6 +46,7 @@ const appReducer = (state = initialState, action) => {
         
         case CLEAR_ERRORS_LOGIN_AND_REGISTER:
             // PAYLOAD[0] = EVENT, PAYLOAD[1] = ERROR
+            console.log(action.payload)
             return {...state,
             errorsLoginAndRegister: {
                 ...state.errorsLoginAndRegister,
@@ -56,6 +57,7 @@ const appReducer = (state = initialState, action) => {
             return state;
 
         case REGISTER_USER:
+            console.log(action.payload)
             return state;
 
         case LOGIN_USER:

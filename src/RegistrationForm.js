@@ -17,9 +17,6 @@ function RegistrationForm(props) {
     formSchema.isValid(props.form).then((valid) => {
       setIsButtonDisabled(!valid);
     });
-    // REMOVED FORMSCHEMA FROM BELOW
-    // BECAUSE IT BEGAN TO THROW AN ERROR
-    // NOT SURE IF IT NEEDED TO BE THERE IN THE FIRST PLACE
   }, [props.form]);
 
   // YUP SCHEMA
@@ -45,9 +42,15 @@ function RegistrationForm(props) {
       });
   };
   
+  // DISPATCH CHANGE AND VALIDATE
+  const formChangeValidation = (e) => {
+    props.updateForm(e);
+    validateChange(e)
+  }
+
   // DISPATCH
-  const formSubmit = (e) => {
-    e.preventDefault();
+  // const formSubmit = (e) => {
+    // e.preventDefault();
     // WILL NEED TO BE PUT INTO DISPATCH EVENTUALLY, SAVE THUNKS FOR END
     // axios
     // FOR NOW CHANGE FORMSTATE TO PROPS.FORM
@@ -66,11 +69,18 @@ function RegistrationForm(props) {
       // FINE FOR NOW, WILL NEED TO BE SET INTO STORE 
         // setServerError("Error Message");
       // })
-  };
+  // };
+
+  const formSubmit = e => {
+    e.preventDefault();
+    props.submit(props.form)
+  }
 
   return (
+    // REMOVE FRAGMENT
     <>
-    <form id='RegistrationForm' onSubmit={formSubmit}>
+    {/* ORIGINAL ONSUBMIT WAS 'FORMSUBMIT' */}
+    <form id='RegistrationForm' onSubmit={(e) => formSubmit(e)}>
 
       {/* SERVER ERROR IN STORE */}
       {serverError ? <p className="error">{serverError}</p> : null}
@@ -81,7 +91,7 @@ function RegistrationForm(props) {
           id="email"
           type="text"
           name="email"
-          onChange={e => props.updateForm(e)}
+          onChange={formChangeValidation}
           value={props.form.email}
         />
 
@@ -100,7 +110,7 @@ function RegistrationForm(props) {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
           value={props.form.password}
-          onChange={e => props.updateForm(e)}
+          onChange={formChangeValidation}
         />
       </label>
 
@@ -109,7 +119,7 @@ function RegistrationForm(props) {
 
       <p>By creating an account you agree to our <a href="/">Terms & Privacy</a>.</p>
 
-      <button disabled={isButtonDisabled} type="submit">
+      <button disabled={isButtonDisabled} type="submit" >
         Submit
       </button>  
 
@@ -137,7 +147,7 @@ const mapDispatchToProps = dispatch => {
     clearForm: () => dispatch (clearLoginAndRegisterForm()),
     setErrors: (e, err) => dispatch (setErrorsLoginAndRegister(e, err)),
     clearErrors: () => dispatch (clearErrorsLoginAndRegister()),
-    submit: () => dispatch (registerUser()),
+    submit: (form) => dispatch (registerUser(form)),
     testyup: () => dispatch(testyup())
   }
 }
